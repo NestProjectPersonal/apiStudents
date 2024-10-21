@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CourseService } from './clients/course/course.service';
+//import { CourseService } from './clients/course/course.service';
 
 
 @Controller('users')
@@ -10,7 +10,6 @@ export class UserController {
   constructor(
     
     private readonly userService: UserService,
-    private readonly courseService: CourseService
   
   ) {}
 
@@ -29,12 +28,6 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
-
-  @Get('courses/:_id')
-  async getCoursesByuuid(@Param('_id') _id: string) {
-    return this.courseService.getCoursesByuuid(_id);
-  }
- 
 }
 
 

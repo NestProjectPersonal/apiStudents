@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserModule } from './user/user.module';
 import { RegistrationModule } from './registration/registration.module';
-import { ServicesService } from './services/services.service';
+import { CourseModule } from './module/course/course.module';
 
 
 @Module({
@@ -24,8 +24,8 @@ import { ServicesService } from './services/services.service';
     }),
     UserModule,
     RegistrationModule,
+    CourseModule,
   ],
-  providers: [ServicesService],
 
 })
 export class AppModule {}
