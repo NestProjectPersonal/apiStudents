@@ -16,7 +16,7 @@ export class CourseService {
     async getCoursesByuuid(_id: string): Promise<any> {
         try {
           const response = await firstValueFrom(
-            this.httpService.get(`http://localhost:3001/api/courses/${_id}`), 
+            this.httpService.get(`http://localhost:3001/courses/${_id}`), 
           );
           console.log(response)
           return response.data;

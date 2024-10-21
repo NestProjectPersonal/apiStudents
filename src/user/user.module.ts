@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HttpModule } from '@nestjs/axios';
 
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
-import { HttpModule } from '@nestjs/axios';
 import { UserController } from './user.controller';
-//import { CourseService } from './clients/course/course.service';
+import { CourseService } from './clients/course/course.service';
+
+
 
 
 
@@ -20,6 +22,6 @@ import { UserController } from './user.controller';
   ],
 
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService,CourseService],
 })
 export class UserModule { }

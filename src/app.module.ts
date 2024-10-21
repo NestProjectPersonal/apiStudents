@@ -3,16 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserModule } from './user/user.module';
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { CourseService } from './user/clients/course/course.service';
-import { UserService } from './user/user.service';
-import { User } from './user/entities/user.entity';
 import { RegistrationModule } from './registration/registration.module';
+import { ServicesService } from './services/services.service';
 
 
 @Module({
   imports: [
-    HttpModule,
     ConfigModule.forRoot(),
 
     TypeOrmModule.forRoot({
@@ -29,9 +25,7 @@ import { RegistrationModule } from './registration/registration.module';
     UserModule,
     RegistrationModule,
   ],
-  
-  //providers:[UserService],
-  //exports:[UserService]
+  providers: [ServicesService],
 
 })
 export class AppModule {}
