@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsString } from "class-validator"
+import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
 
 
 export class CreateUserDto {
@@ -15,5 +15,8 @@ export class CreateUserDto {
     @IsString()
     profession: string
 
+    @IsNumber()
+    @IsOptional()
+    totalcredit?: number
 
 }

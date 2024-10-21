@@ -9,7 +9,9 @@ import { CourseModule } from './module/course/course.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -18,7 +20,7 @@ import { CourseModule } from './module/course/course.module';
       database: process.env.DB_NAME,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      entities: [UserModule],
+      entities: [UserModule,RegistrationModule,CourseModule],
       autoLoadEntities: true,
       synchronize: true,
     }),

@@ -1,11 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRegistrationDto } from './dto/create-registration.dto';
 import { UpdateRegistrationDto } from './dto/update-registration.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Registration } from './entities/registration.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RegistrationService {
+
+  constructor(
+    @InjectRepository(Registration)
+    private readonly registrationRepository: Repository<Registration>,
+  ) {}
+
+
   create(createRegistrationDto: CreateRegistrationDto) {
-    return 'This action adds a new registration';
+    const registration = this.registrationRepository.create(createRegistrationDto)
+    return this.registrationRepository.save(registration)
   }
 
   findAll() {

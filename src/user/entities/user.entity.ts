@@ -1,5 +1,6 @@
 
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Registration } from "src/registration/entities/registration.entity";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -14,15 +15,28 @@ export class User {
 
     @Column()
     lastName: string
-    
+
     @Column()
     email: string
 
     @Column()
-    profession:string
+    profession: string
+
+    @Column()
+    totalcredit?: number
 
 
+    @BeforeInsert()
+    totalcreditc() {
+        const totalcredit = process.env.TOTALCREDIT
+        //parseFloat(process.env.TOTALCREDIT)
+    }
 
 
+    @OneToMany(
+        () => Registration,
+        (registration) => registration.user
+    )
+    registration: Registration
 
 }
