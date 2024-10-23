@@ -2,11 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 
 @Controller('subscriptions')
 export class SubscriptionsController {
-  constructor(private readonly subscriptionsService: SubscriptionsService) {}
+  constructor(
+    private readonly subscriptionsService: SubscriptionsService
+  ) { }
 
   /*
 @Post()
@@ -17,18 +20,19 @@ create(@Body() createRegistrationDto: CreateRegistrationDto) {
 
 
 @Post()
-registerUser(@Body() createRegistrationDto: CreateRegistrationDto) {
-  const { userId } = createRegistrationDto;
-  return this.registrationService.registerUserToCourse(userId);
+registerUser(@Body() createSubscriptionDto: CreateSubscriptionDto) {
+  const { userId } = createSubscriptionDto;
+  return this.registerUserToCourse(userId);
 }
+
 */
-
-
-
-
+  
+  
   @Post()
   create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
-    return this.subscriptionsService.create(createSubscriptionDto);
+    //const { userId,registrationdate,period} = createSubscriptionDto;
+        
+    return this.subscriptionsService.createSubscription( createSubscriptionDto);
   }
 
   @Get()

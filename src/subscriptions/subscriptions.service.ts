@@ -6,6 +6,7 @@ import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { Subscription } from './entities/subscription.entity';
 import { User } from 'src/user/entities/user.entity';
 
+
 @Injectable()
 export class SubscriptionsService {
 
@@ -18,17 +19,22 @@ export class SubscriptionsService {
 
   ) { }
 
-  async create(createSubscriptionDto: CreateSubscriptionDto) {
+  async createSubscription(createSubscriptionDto: CreateSubscriptionDto): Promise<Subscription> {
 
-    const { userId } = createSubscriptionDto
+    const { userId, registrationdate, period } = createSubscriptionDto
+
 
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
     }
 
-    const data = this.subscriptionRepository.create(createSubscriptionDto)
-    return this.subscriptionRepository.save(data)
+    const newdata = this.subscriptionRepository.create({
+      user,
+      registrationdate,
+      period
+    })
+    return await this.subscriptionRepository.save(newdata)
   }
 
   findAll() {

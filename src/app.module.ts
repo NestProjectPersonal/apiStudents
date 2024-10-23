@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { CourseModule } from './module/course/course.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { SubscriptionsService } from './services/subscriptions/subscriptions.service';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     CourseModule,
     SubscriptionsModule,
   ],
+  providers: [],
 
 })
 export class AppModule {}
