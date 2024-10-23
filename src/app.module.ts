@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserModule } from './user/user.module';
-import { RegistrationModule } from './registration/registration.module';
 import { CourseModule } from './module/course/course.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 
 @Module({
@@ -20,13 +20,13 @@ import { CourseModule } from './module/course/course.module';
       database: process.env.DB_NAME,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      entities: [UserModule,RegistrationModule,CourseModule],
+      entities: [UserModule,SubscriptionsModule,CourseModule],
       autoLoadEntities: true,
       synchronize: true,
     }),
     UserModule,
-    RegistrationModule,
     CourseModule,
+    SubscriptionsModule,
   ],
 
 })

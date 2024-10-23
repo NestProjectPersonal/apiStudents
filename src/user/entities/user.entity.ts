@@ -1,5 +1,4 @@
-
-import { Registration } from "src/registration/entities/registration.entity";
+import { Subscription } from "src/subscriptions/entities/subscription.entity";
 import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -32,11 +31,12 @@ export class User {
         //parseFloat(process.env.TOTALCREDIT)
     }
 
-
+    
     @OneToMany(
-        () => Registration,
-        (registration) => registration.user
+        () => Subscription,
+        (subscription) => subscription.user
     )
-    registration: Registration
+    subscription: Subscription
+    
 
 }
