@@ -18,4 +18,7 @@ export class Subscription {
     )
     user: User
 
+    @Column()
+    courseId: string;
+
 }

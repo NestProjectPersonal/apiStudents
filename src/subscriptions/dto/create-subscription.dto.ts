@@ -2,9 +2,13 @@ import { IsNotEmpty, IsNumber, IsString } from "class-validator"
 
 export class CreateSubscriptionDto {
 
-    @IsString()
     @IsNotEmpty()
+    @IsString()
     userId:string
+    
+    @IsNotEmpty()
+    @IsString()
+    courseId:string
 
     @IsString()
     registrationdate:string

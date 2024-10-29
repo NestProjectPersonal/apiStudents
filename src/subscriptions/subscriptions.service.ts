@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { Subscription } from './entities/subscription.entity';
 import { User } from 'src/user/entities/user.entity';
+import { CoursesService } from 'src/services/courses/courses.service';
 
 
 @Injectable()
@@ -15,24 +16,29 @@ export class SubscriptionsService {
     @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    private readonly coursesServices: CoursesService,
 
   ) { }
 
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto):Promise<Subscription> {
 
-    const { userId,registrationdate,period } = createSubscriptionDto
-
+    const { userId,courseId,registrationdate,period } = createSubscriptionDto
 
     const user = await this.userRepository.findOneBy({id:userId});
-    //const user = await this.userRepository.findOne({ where: { id: userId } });
+    const course = await this.coursesServices.getCoursesByuuid(courseId)
+
     if (!user) {
       throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
+    }
+    if (!course) {
+      throw new NotFoundException(`Curso con ID ${courseId} no encontrado`);
     }
 
 
     const newdata = this.subscriptionRepository.create({
       user,
+      courseId,
       registrationdate,
       period
     })
