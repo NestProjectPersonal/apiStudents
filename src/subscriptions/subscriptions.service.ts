@@ -19,15 +19,17 @@ export class SubscriptionsService {
 
   ) { }
 
-  async createSubscription(createSubscriptionDto: CreateSubscriptionDto): Promise<Subscription> {
+  async createSubscription(createSubscriptionDto: CreateSubscriptionDto):Promise<Subscription> {
 
-    const { userId, registrationdate, period } = createSubscriptionDto
+    const { userId,registrationdate,period } = createSubscriptionDto
 
 
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const user = await this.userRepository.findOneBy({id:userId});
+    //const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
     }
+
 
     const newdata = this.subscriptionRepository.create({
       user,

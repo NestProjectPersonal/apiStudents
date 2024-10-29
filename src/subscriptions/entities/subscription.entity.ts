@@ -13,10 +13,8 @@ export class Subscription {
     @Column()
     period: number
 
-
     @ManyToOne(() => User,
-        user => user.subscription,
-        { cascade: true }
+        (user) => user.subscription,
     )
     user: User
 

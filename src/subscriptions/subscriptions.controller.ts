@@ -1,36 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
 
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Repository } from 'typeorm';
+
 
 
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(
-    private readonly subscriptionsService: SubscriptionsService
+    private readonly subscriptionsService: SubscriptionsService,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
   ) { }
-
-  /*
-@Post()
-create(@Body() createRegistrationDto: CreateRegistrationDto) {
-  //const { userId } = createRegistrationDto;
-  return this.registrationService.create(createRegistrationDto);
-}
-
-
-@Post()
-registerUser(@Body() createSubscriptionDto: CreateSubscriptionDto) {
-  const { userId } = createSubscriptionDto;
-  return this.registerUserToCourse(userId);
-}
-
-*/
-  
   
   @Post()
-  create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
-    //const { userId,registrationdate,period} = createSubscriptionDto;
+  async create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
+    const  {userId}  = createSubscriptionDto;
+    const user = await this.userRepository.findOneBy({id:userId});
+
+    if (!user) {
+      throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
+    }
         
     return this.subscriptionsService.createSubscription( createSubscriptionDto);
   }
