@@ -17,6 +17,6 @@ export class CreateUserDto {
 
     @IsNumber()
     @IsOptional()
-    totalcredit?: number
+    totalcredit: number
 
 }

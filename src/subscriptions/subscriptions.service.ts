@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,6 +18,7 @@ export class SubscriptionsService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly coursesServices: CoursesService,
+    
 
   ) { }
 
@@ -34,17 +35,27 @@ export class SubscriptionsService {
     if (!course) {
       throw new NotFoundException(`Curso con ID ${courseId} no encontrado`);
     }
+    if (user.creditsUser  < course.credits) {
+      throw new BadRequestException(`El usuario no tiene suficientes créditos para la suscripción`);
+    }
 
+    
 
-    const newdata = this.subscriptionRepository.create({
+  
+    await this.userRepository.decrement({id:userId},'creditsUser',course.credits)
+
+    const newSubscription  = this.subscriptionRepository.create({
       user,
       courseId,
       registrationdate,
-      period
+      period,
+      
     })
-    return await this.subscriptionRepository.save(newdata)
+    return await this.subscriptionRepository.save(newSubscription )
   }
 
+
+  
   findAll() {
     return this.subscriptionRepository.find()
   }
@@ -67,55 +78,4 @@ remove(id: number) {
   return `This action removes a #${id} subscription`;
 }
 
-
-
-
-
-async create(createRegistrationDto: CreateRegistrationDto) {
-  
-const { userId } = createRegistrationDto
-
-const user = await this.userRepository.findOne({ where: { id: userId } });
-if (!user) {
-  throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
-  }
-
-
-  const registration = this.registrationRepository.create(createRegistrationDto)
-  return this.registrationRepository.save(registration)
-}
 */
-
-/*
-
-async registerUserToCourse(
-  userId: string, 
-  //date:string,
-    //periodacademic:number,
-  ): Promise<Registration> {
-    // Verifica que el estudiante existe
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-    if (!user) {
-      throw new NotFoundException(`Estudiante con ID ${userId} no encontrado`);
-    }
-
-    // Verifica que el curso existe
-    //const curso = await this.cursoRepository.findOne({ where: { id: cursoId } });
-    //if (!curso) {
-      //throw new NotFoundException(`Curso con ID ${cursoId} no encontrado`);
-    //}
-
-    // Crear la nueva matrícula
-    
-    const newRegistration = this.registrationRepository.create({
-      user,
-    
-    
-    });
-    
-    
-    
-    // Guardar la matrícula en la base de datos
-    return await this.registrationRepository.save(newRegistration);
-  }
-  */

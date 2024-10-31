@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
+import { ConfigModule } from '@nestjs/config';
 //import { CourseService } from './clients/course/course.service';
 
 
@@ -15,6 +16,7 @@ import { UserController } from './user.controller';
 
   imports: [
     UserModule,
+    ConfigModule.forRoot({}),
     TypeOrmModule.forFeature([
       User
     ])

@@ -8,6 +8,12 @@ export class Subscription {
     id: string
 
     @Column()
+    courseId: string;
+    
+    @Column()
+    userId: string;
+
+    @Column()
     registrationdate: string
 
     @Column()
@@ -18,7 +24,6 @@ export class Subscription {
     )
     user: User
 
-    @Column()
-    courseId: string;
+
 
 }

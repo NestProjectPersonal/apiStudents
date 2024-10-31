@@ -22,15 +22,7 @@ export class User {
     profession: string
 
     @Column()
-    totalcredit?: number
-
-
-    @BeforeInsert()
-    totalcreditc() {
-        const totalcredit = process.env.TOTALCREDIT
-        //parseFloat(process.env.TOTALCREDIT)
-    }
-
+    creditsUser: number
     
     @OneToMany(
         () => Subscription,
