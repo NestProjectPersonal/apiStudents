@@ -1,5 +1,5 @@
 import { User } from "src/user/entities/user.entity"
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity()
 export class Subscription {
@@ -13,8 +13,8 @@ export class Subscription {
     @Column()
     userId: string;
 
-    @Column()
-    registrationdate: string
+    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    registrationdate: Date
 
     @Column()
     period: number

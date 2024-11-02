@@ -39,8 +39,6 @@ export class SubscriptionsService {
       throw new BadRequestException(`El usuario no tiene suficientes créditos para la suscripción`);
     }
 
-    
-
   
     await this.userRepository.decrement({id:userId},'creditsUser',course.credits)
 

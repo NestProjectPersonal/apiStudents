@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator"
 
 export class CreateSubscriptionDto {
@@ -10,8 +11,9 @@ export class CreateSubscriptionDto {
     @IsString()
     courseId:string
 
-    @IsString()
-    registrationdate:string
+
+    @Transform(({ value }) => value ? value.toISOString() : null)
+    registrationdate: Date;
 
     @IsNumber()
     period: number
